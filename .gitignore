@@ -1,0 +1,5 @@
+node_modules
+elm-stuff
+*.swp
+.idea
+public/javascripts

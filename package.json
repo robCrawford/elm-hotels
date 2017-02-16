@@ -1,0 +1,29 @@
+{
+  "name": "trptest-elm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/julianjelfs/elmhotels.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/julianjelfs/elmhotels/issues"
+  },
+  "homepage": "https://github.com/julianjelfs/elmhotels",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "express": "2.5.8",
+    "jade": ">= 0.0.1",
+    "proxy-middleware": "^0.14.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-elm": "^0.2.0"
+  }
+}
