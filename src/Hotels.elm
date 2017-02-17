@@ -21,17 +21,26 @@ main =
 -- MODEL
 
 
+type alias Hotel =
+    { name : String
+    }
+
+
+type alias HotelsResponse =
+    List Hotel
+
+
 type alias Model =
     { firstName : String
     , lastName : String
     , imgUrl : String
-    , hotelsJSON : String
+    , hotels : HotelsResponse
     }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( Model "" "" "img/generic.png" "Loading Hotels..."
+    ( Model "" "" "img/generic.png" []
     , getHotelsData
     )
 
@@ -41,7 +50,7 @@ model =
     { firstName = ""
     , lastName = ""
     , imgUrl = ""
-    , hotelsJSON = ""
+    , hotels = []
     }
 
 
@@ -53,7 +62,7 @@ type Msg
     = FirstName String
     | LastName String
     | Logo String
-    | FetchHotels (Result Http.Error String)
+    | FetchHotels (Result Http.Error HotelsResponse)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -68,8 +77,8 @@ update msg model =
         Logo val ->
             ( { model | imgUrl = val }, Cmd.none )
 
-        FetchHotels (Ok json) ->
-            ( { model | hotelsJSON = json }, Cmd.none )
+        FetchHotels (Ok hotels) ->
+            ( { model | hotels = hotels }, Cmd.none )
 
         FetchHotels (Err _) ->
             ( model, Cmd.none )
@@ -89,7 +98,7 @@ view model =
         , img [ src model.imgUrl ] []
         , br [] []
         , br [] []
-        , div [] [ text (model.hotelsJSON) ]
+        , div [] [ text (toString model.hotels) ]
         ]
 
 
@@ -108,9 +117,19 @@ subscriptions model =
 
 getHotelsData : Cmd Msg
 getHotelsData =
-    Http.send FetchHotels (Http.get "data/hotels.json" decodeHotelsResponse)
+    Http.send FetchHotels getHotelsRequest
 
 
-decodeHotelsResponse : Json.Decoder String
-decodeHotelsResponse =
-    Json.at [ "Establishments", "0", "Name" ] Json.string
+getHotelsRequest : Http.Request HotelsResponse
+getHotelsRequest =
+    Http.get "data/hotels.json" hotelsDecoder
+
+
+hotelsDecoder : Json.Decoder HotelsResponse
+hotelsDecoder =
+    Json.field "Establishments" (Json.list mapEstablishments)
+
+
+mapEstablishments : Json.Decoder Hotel
+mapEstablishments =
+    Json.map Hotel (Json.field "Name" Json.string)
