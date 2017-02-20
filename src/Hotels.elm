@@ -23,6 +23,7 @@ main =
 
 type alias Hotel =
     { name : String
+    , thumbnailUrl : String
     }
 
 
@@ -62,6 +63,7 @@ type Msg
     = FirstName String
     | LastName String
     | Logo String
+      --          (Result Error a -> msg)
     | FetchHotels (Result Http.Error HotelsResponse)
 
 
@@ -98,7 +100,15 @@ view model =
         , img [ src model.imgUrl ] []
         , br [] []
         , br [] []
-        , div [] [ text (toString model.hotels) ]
+        , div [] (List.map hotelView model.hotels)
+        ]
+
+
+hotelView : Hotel -> Html Msg
+hotelView hotel =
+    div [ class "hotel" ]
+        [ img [ src hotel.thumbnailUrl ] []
+        , div [ class "content" ] [ (text hotel.name) ]
         ]
 
 
@@ -117,19 +127,25 @@ subscriptions model =
 
 getHotelsData : Cmd Msg
 getHotelsData =
+    --        (Result Error a -> msg) -> Request a -> Cmd msg
     Http.send FetchHotels getHotelsRequest
 
 
 getHotelsRequest : Http.Request HotelsResponse
 getHotelsRequest =
+    --       String -> Decoder a -> Request a
     Http.get "data/hotels.json" hotelsDecoder
 
 
 hotelsDecoder : Json.Decoder HotelsResponse
 hotelsDecoder =
+    --         String -> Decoder a -> Decoder a
     Json.field "Establishments" (Json.list mapEstablishments)
 
 
 mapEstablishments : Json.Decoder Hotel
 mapEstablishments =
-    Json.map Hotel (Json.field "Name" Json.string)
+    --       (a -> value) -> Decoder a -> Decoder value
+    Json.map2 Hotel
+        (Json.field "Name" Json.string)
+        (Json.field "ThumbnailUrl" Json.string)
