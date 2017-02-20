@@ -1,10 +1,11 @@
 body {
+    padding-top: 14px;
     min-width: 320px;
 }
 
 .hotel-header h2{
     padding-bottom: 0;
-    margin-bottom: -5px;
+    margin-bottom: -42px;
 }
 
 .hotel-title{
@@ -15,6 +16,10 @@ body {
 
 .product {
     min-height: 214px;
+    background: #eee;
+}
+
+.description {
     background: #eee;
 }
 

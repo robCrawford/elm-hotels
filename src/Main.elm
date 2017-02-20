@@ -16,42 +16,23 @@ main =
         }
 
 
-
--- MODEL
+model : Model
+model =
+    { hotels = []
+    , filters = FilterCriteria 10 "" 0 3 0
+    }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( Model "" "" "img/generic.png" []
+    ( model
     , getHotelsData
     )
-
-
-model : Model
-model =
-    { firstName = ""
-    , lastName = ""
-    , imgUrl = ""
-    , hotels = []
-    }
-
-
-
--- UPDATE
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        FirstName val ->
-            ( { model | firstName = val }, Cmd.none )
-
-        LastName val ->
-            ( { model | lastName = val }, Cmd.none )
-
-        Logo val ->
-            ( { model | imgUrl = val }, Cmd.none )
-
         FetchHotels (Ok hotels) ->
             ( { model | hotels = hotels }, Cmd.none )
 
@@ -59,17 +40,9 @@ update msg model =
             ( model, Cmd.none )
 
 
-
--- VIEW
-
-
 view : Model -> Html Msg
 view model =
     Views.page model
-
-
-
--- SUBSCRIPTIONS
 
 
 subscriptions : Model -> Sub Msg

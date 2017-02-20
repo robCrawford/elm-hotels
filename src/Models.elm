@@ -4,18 +4,13 @@ import Http exposing (..)
 
 
 type alias Model =
-    { firstName : String
-    , lastName : String
-    , imgUrl : String
-    , hotels : HotelsResponse
+    { hotels : HotelsResponse
+    , filters : FilterCriteria
     }
 
 
 type Msg
-    = FirstName String
-    | LastName String
-    | Logo String
-    | FetchHotels (Result Http.Error HotelsResponse)
+    = FetchHotels (Result Http.Error HotelsResponse)
 
 
 type alias Hotel =
@@ -26,3 +21,12 @@ type alias Hotel =
 
 type alias HotelsResponse =
     List Hotel
+
+
+type alias FilterCriteria =
+    { distance : Float
+    , name : String
+    , stars : Float
+    , rating : Float
+    , minPrice : Float
+    }

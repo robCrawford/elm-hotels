@@ -3,4 +3,4 @@ elm-stuff
 *.swp
 *.vscode
 .idea
-public/javascripts
+public/js
