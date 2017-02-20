@@ -8,10 +8,10 @@ function onError(err) {
 }
 
 gulp.task('elm', function () {
-    return gulp.src('src/Hotels.elm')
+    return gulp.src('src/Main.elm')
         .pipe(elm())
         .on('error', onError)
-        .pipe(gulp.dest('public/javascripts/'));
+        .pipe(gulp.dest('public/js/'));
 });
 
 gulp.task('default', function () {
