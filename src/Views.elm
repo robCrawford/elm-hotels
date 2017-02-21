@@ -28,7 +28,7 @@ page model =
                         ]
                     ]
                 , div [ class "row hotelProduct xsResponse clearfix", id "results" ]
-                    (List.map hotelDetails (filterResults model.hotels))
+                    (List.map hotelDetails (filterResults model.hotels model.filters))
                 , pagingUI
                 ]
             ]

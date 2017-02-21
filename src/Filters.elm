@@ -2,11 +2,17 @@ module Filters exposing (..)
 
 import Models exposing (..)
 import String exposing (..)
+import Regex exposing (..)
 
 
-filterResults : HotelsResponse -> HotelsResponse
-filterResults results =
-    List.take 9 results
+filterResults : HotelsResponse -> FilterCriteria -> HotelsResponse
+filterResults results filters =
+    List.take 9 (filterByName results filters.name)
+
+
+filterByName : HotelsResponse -> String -> HotelsResponse
+filterByName hotels name =
+    List.filter (\h -> Regex.contains (caseInsensitive (regex name)) h.name) hotels
 
 
 validateFloatInput : String -> Float -> Float -> Float
