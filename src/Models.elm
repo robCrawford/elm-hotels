@@ -10,7 +10,8 @@ type alias Model =
 
 
 type Msg
-    = FetchHotels (Result Http.Error HotelsResponse)
+    = SetHotelResults (Result Http.Error HotelsResponse)
+    | SetFilters (FilterCriteria -> FilterCriteria)
 
 
 type alias Hotel =

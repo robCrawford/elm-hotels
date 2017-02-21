@@ -1,8 +1,10 @@
 module Views exposing (..)
 
 import Models exposing (..)
+import Filters exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (..)
 
 
 page : Model -> Html Msg
@@ -17,8 +19,8 @@ page model =
                 ]
             , div [ class "col-lg-9 col-md-9 col-sm-12" ]
                 [ div [ class "clearfix hotel-header" ]
-                    [ h2 []
-                        [ text "HOTELS" ]
+                    [ div [] [ text (toString model.filters) ]
+                    , h2 [] [ text "HOTELS" ]
                     ]
                 , div [ class "hotelFilter clearfix" ]
                     [ div [ class "pull-right" ]
@@ -31,11 +33,6 @@ page model =
                 ]
             ]
         ]
-
-
-filterResults : HotelsResponse -> HotelsResponse
-filterResults results =
-    List.take 9 results
 
 
 header : Html Msg
@@ -64,28 +61,23 @@ filterUI =
                 [ ul [ class "filters" ]
                     [ li []
                         [ text "Distance"
-                        , input [ id "filter-distance" ]
-                            []
+                        , input [ onInput updateDistanceFilter ] []
                         ]
                     , li []
                         [ text "Name"
-                        , input [ id "filter-name" ]
-                            []
+                        , input [ onInput updateNameFilter ] []
                         ]
                     , li []
                         [ text "Stars"
-                        , input [ id "filter-stars" ]
-                            []
+                        , input [ onInput updateStarsFilter ] []
                         ]
                     , li []
                         [ text "Rating"
-                        , input [ id "filter-rating" ]
-                            []
+                        , input [ onInput updateRatingFilter ] []
                         ]
                     , li []
                         [ text "Minimum price"
-                        , input [ id "filter-price" ]
-                            []
+                        , input [ onInput updateMinPriceFilter ] []
                         ]
                     ]
                 , div []

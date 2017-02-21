@@ -33,11 +33,14 @@ init =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        FetchHotels (Ok hotels) ->
+        SetHotelResults (Ok hotels) ->
             ( { model | hotels = hotels }, Cmd.none )
 
-        FetchHotels (Err _) ->
+        SetHotelResults (Err _) ->
             ( model, Cmd.none )
+
+        SetFilters updateFn ->
+            ( { model | filters = updateFn model.filters }, Cmd.none )
 
 
 view : Model -> Html Msg

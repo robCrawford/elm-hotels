@@ -7,7 +7,7 @@ import Json.Decode as Json
 
 getHotelsData : Cmd Msg
 getHotelsData =
-    Http.send FetchHotels getHotelsRequest
+    Http.send SetHotelResults getHotelsRequest
 
 
 getHotelsRequest : Http.Request HotelsResponse
