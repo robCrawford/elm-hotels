@@ -22,7 +22,7 @@ page model =
                     [ div [] [ text (toString model.filters) ]
                     , h2 [] [ text "HOTELS" ]
                     ]
-                , div [ class "hotelFilter clearfix" ]
+                , div [ class "clearfix" ]
                     [ div [ class "pull-right" ]
                         [ sortUI
                         ]
@@ -68,15 +68,15 @@ filterUI =
                         , input [ onInput updateNameFilter ] []
                         ]
                     , li []
-                        [ text "Stars"
+                        [ text "Star Rating"
                         , input [ onInput updateStarsFilter ] []
                         ]
                     , li []
-                        [ text "Rating"
+                        [ text "Minimum User Rating"
                         , input [ onInput updateRatingFilter ] []
                         ]
                     , li []
-                        [ text "Minimum price"
+                        [ text "Minimum Price"
                         , input [ onInput updateMinPriceFilter ] []
                         ]
                     ]
@@ -139,11 +139,14 @@ hotelDetails hotel =
         , div [ class "description" ]
             [ ul []
                 [ li [ class "hotel-title" ] [ (text hotel.name) ]
-                , li [] [ (text (getDistanceString hotel.distance)) ]
+                , li [] [ (text ("Distance: " ++ getDistanceString hotel.distance)) ]
+                , li [] [ (text ("Star rating: " ++ (toString hotel.stars))) ]
+                , li [] [ (text ("User rating: " ++ (toString hotel.rating))) ]
+                , li [] [ (text ("From: £" ++ (toString hotel.minPrice))) ]
                 ]
-            , div []
-                [ a [ class "btn btn-primary" ] [ text "More info" ]
-                ]
+              -- , div []
+              --     [ a [ class "btn btn-primary" ] [ text "More info" ]
+              --     ]
             ]
         ]
 

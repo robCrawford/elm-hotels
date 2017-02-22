@@ -17,6 +17,9 @@ type Msg
 type alias Hotel =
     { distance : Float
     , name : String
+    , stars : Float
+    , rating : Float
+    , minPrice : Float
     , imageUrl : String
     }
 

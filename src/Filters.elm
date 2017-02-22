@@ -10,6 +10,9 @@ filterResults results filters =
     results
         |> filterByName filters.name
         |> filterByDistance filters.distance
+        |> filterByStars filters.stars
+        |> filterByRating filters.rating
+        |> filterByPrice filters.minPrice
         |> List.take 9
 
 
@@ -20,7 +23,22 @@ filterByName name hotels =
 
 filterByDistance : Float -> HotelsResponse -> HotelsResponse
 filterByDistance distance hotels =
-    List.filter (\h -> h.distance < distance) hotels
+    List.filter (\h -> h.distance <= distance || distance == 0) hotels
+
+
+filterByStars : Float -> HotelsResponse -> HotelsResponse
+filterByStars stars hotels =
+    List.filter (\h -> h.stars == stars || stars == 0) hotels
+
+
+filterByRating : Float -> HotelsResponse -> HotelsResponse
+filterByRating rating hotels =
+    List.filter (\h -> h.rating >= rating || rating == 0) hotels
+
+
+filterByPrice : Float -> HotelsResponse -> HotelsResponse
+filterByPrice minPrice hotels =
+    List.filter (\h -> h.minPrice >= minPrice || minPrice == 0) hotels
 
 
 validateFloatInput : String -> Float -> Float -> Float
