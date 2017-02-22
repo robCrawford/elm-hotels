@@ -5,14 +5,18 @@ import String exposing (..)
 import Regex exposing (..)
 
 
-filterResults : HotelsList -> FilterCriteria -> HotelsList
-filterResults results filterCriteria =
-    results
-        |> filterByName filterCriteria.name
-        |> filterByDistance filterCriteria.distance
-        |> filterByStars filterCriteria.stars
-        |> filterByRating filterCriteria.rating
-        |> filterByPrice filterCriteria.minPrice
+applyFilters : FilterCriteria -> HotelsList -> HotelsList
+applyFilters filterCriteria hotels =
+    (getFilters filterCriteria) hotels
+
+
+getFilters : FilterCriteria -> (HotelsList -> HotelsList)
+getFilters filterCriteria =
+    filterByName filterCriteria.name
+        >> filterByDistance filterCriteria.distance
+        >> filterByStars filterCriteria.stars
+        >> filterByRating filterCriteria.rating
+        >> filterByMinPrice filterCriteria.minPrice
 
 
 filterByName : String -> HotelsList -> HotelsList
@@ -35,8 +39,8 @@ filterByRating rating hotels =
     List.filter (\h -> h.rating >= rating || rating == 0) hotels
 
 
-filterByPrice : Float -> HotelsList -> HotelsList
-filterByPrice minPrice hotels =
+filterByMinPrice : Float -> HotelsList -> HotelsList
+filterByMinPrice minPrice hotels =
     List.filter (\h -> h.minPrice >= minPrice || minPrice == 0) hotels
 
 

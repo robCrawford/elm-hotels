@@ -10,7 +10,7 @@ import Html.Events exposing (..)
 
 getHotelsHtml : Model -> List (Html Msg)
 getHotelsHtml model =
-    filterResults model.hotels model.filterCriteria
+    applyFilters model.filterCriteria model.hotels
         |> sortHotels model.sortCriteria
         |> List.take 9
         |> List.map hotelDetailsHtml
