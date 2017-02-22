@@ -10,10 +10,27 @@ import Html.Events exposing (..)
 
 getHotelsHtml : Model -> List (Html Msg)
 getHotelsHtml model =
-    applyFilters model.filterCriteria model.hotels
-        |> sortHotels model.sortCriteria
+    getHotelsResults model
         |> List.take 9
         |> List.map hotelDetailsHtml
+
+
+getHotelsResults : Model -> HotelsList
+getHotelsResults model =
+    model.hotels
+        |> getFilters model.filterCriteria
+        |> sortHotels model.sortCriteria
+        |> List.drop (9 * model.pageIndex)
+
+
+pagePrevious : Msg
+pagePrevious =
+    PagePrevious
+
+
+pageNext : Msg
+pageNext =
+    PageNext
 
 
 page : Model -> Html Msg
@@ -28,16 +45,17 @@ page model =
                 ]
             , div [ class "col-lg-9 col-md-9 col-sm-12" ]
                 [ div [ class "clearfix hotel-header" ]
-                    [ h2 [] [ text "HOTELS" ]
+                    [ div [] [ text ("Page " ++ (toString (model.pageIndex + 1))) ]
+                    , h2 [] [ text "HOTELS" ]
                     ]
                 , div [ class "clearfix" ]
                     [ div [ class "pull-right" ]
                         [ sortUI
                         ]
                     ]
-                , div [ class "row hotel-results xsResponse clearfix", id "results" ]
+                , div [ class "row hotel-results clearfix" ]
                     (getHotelsHtml model)
-                , pagingUI
+                , pagingUI model
                 ]
             ]
         ]
@@ -114,19 +132,35 @@ sortUI =
         ]
 
 
-pagingUI : Html Msg
-pagingUI =
+pagingUI : Model -> Html Msg
+pagingUI model =
     div [ class "pagination pull-right no-margin-top" ]
         [ ul [ class "pagination no-margin-top" ]
-            [ li [] [ a [] [ text "«" ] ]
-            , li [ class "active" ] [ a [] [ text "1" ] ]
-            , li [] [ a [] [ text "2" ] ]
-            , li [] [ a [] [ text "3" ] ]
-            , li [] [ a [] [ text "4" ] ]
-            , li [] [ a [] [ text "5" ] ]
-            , li [] [ a [] [ text "»" ] ]
+            [ li [] [ getPagingPreviousHtml model ]
+            , li [ class "active" ] [ a [] [ text ("Page " ++ (toString (model.pageIndex + 1))) ] ]
+            , li [] [ getPagingNextHtml model ]
             ]
         ]
+
+
+getPagingNextHtml : Model -> Html Msg
+getPagingNextHtml model =
+    let
+        resultCount =
+            List.length (getHotelsResults model)
+    in
+        if resultCount > 9 then
+            a [ onClick pageNext ] [ text "»" ]
+        else
+            a [ class "inactive" ] [ text "»" ]
+
+
+getPagingPreviousHtml : Model -> Html Msg
+getPagingPreviousHtml model =
+    if model.pageIndex > 0 then
+        a [ onClick pagePrevious ] [ text "«" ]
+    else
+        a [ class "inactive" ] [ text "«" ]
 
 
 hotelDetailsHtml : Hotel -> Html Msg
@@ -149,9 +183,6 @@ hotelDetailsHtml hotel =
                 , li [] [ (text ("User rating: " ++ (toString hotel.rating))) ]
                 , li [] [ (text ("From: £" ++ (toString hotel.minPrice))) ]
                 ]
-              -- , div []
-              --     [ a [ class "btn btn-primary" ] [ text "More info" ]
-              --     ]
             ]
         ]
 

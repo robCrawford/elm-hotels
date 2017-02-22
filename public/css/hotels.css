@@ -18,18 +18,21 @@ body {
     padding-top: 20px;
 }
 
+.hotel-results .description{
+    padding: 10px;
+    margin-bottom: 12px;
+    background: #eee;
+}
+
 .hotel-details {
     min-height: 214px;
     background: #eee;
 }
+
 @media (min-width: 1200px) {
     .hotel-details {
         min-height: 262px;
     }
-}
-
-.description {
-    background: #eee;
 }
 
 .filters input {
@@ -37,22 +40,16 @@ body {
     margin-bottom: 5px;
 }
 
-#update-sort{
-    margin: 5px 0 10px 0;
+.pagination {
+    cursor: pointer;
 }
 
-#results .description{
-    padding: 10px;
-    margin-bottom: 12px;
+.pagination a.inactive {
+    color: #BBB;
 }
 
 ul{
     list-style: none;
     padding: 0 0 10px 0;
     margin: 0;
-}
-
-.btn {
-    padding: 2px 8px;
-    border-radius: 2px;
 }

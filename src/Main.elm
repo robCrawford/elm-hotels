@@ -21,6 +21,7 @@ model =
     { hotels = []
     , filterCriteria = FilterCriteria 10 "" 0 3 0
     , sortCriteria = Distance
+    , pageIndex = 0
     }
 
 
@@ -41,10 +42,21 @@ update msg model =
             ( model, Cmd.none )
 
         SetFilters updateFn ->
-            ( { model | filterCriteria = updateFn model.filterCriteria }, Cmd.none )
+            ( { model
+                | filterCriteria = updateFn model.filterCriteria
+                , pageIndex = 0
+              }
+            , Cmd.none
+            )
 
         SetSortBy sortCriteria ->
             ( { model | sortCriteria = sortCriteria }, Cmd.none )
+
+        PageNext ->
+            ( { model | pageIndex = model.pageIndex + 1 }, Cmd.none )
+
+        PagePrevious ->
+            ( { model | pageIndex = max (model.pageIndex - 1) 0 }, Cmd.none )
 
 
 view : Model -> Html Msg

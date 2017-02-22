@@ -1,17 +1,13 @@
 module Filter exposing (..)
 
 import Models exposing (..)
-import String exposing (..)
 import Regex exposing (..)
 
 
-applyFilters : FilterCriteria -> HotelsList -> HotelsList
-applyFilters filterCriteria hotels =
-    (getFilters filterCriteria) hotels
-
-
-getFilters : FilterCriteria -> (HotelsList -> HotelsList)
+getFilters : FilterCriteria -> HotelsList -> HotelsList
 getFilters filterCriteria =
+    -- When only `FilterCriteria` is supplied, this returns a function `(HotelsList -> HotelsList)`
+    -- See http://stackoverflow.com/questions/27441648/what-does-the-operator-mean-in-elm
     filterByName filterCriteria.name
         >> filterByDistance filterCriteria.distance
         >> filterByStars filterCriteria.stars
@@ -20,32 +16,32 @@ getFilters filterCriteria =
 
 
 filterByName : String -> HotelsList -> HotelsList
-filterByName name hotels =
-    List.filter (\h -> Regex.contains (caseInsensitive (regex name)) h.name) hotels
+filterByName name =
+    List.filter (\h -> Regex.contains (caseInsensitive (regex name)) h.name)
 
 
 filterByDistance : Float -> HotelsList -> HotelsList
-filterByDistance distance hotels =
-    List.filter (\h -> h.distance <= distance || distance == 0) hotels
+filterByDistance distance =
+    List.filter (\h -> h.distance <= distance || distance == 0)
 
 
 filterByStars : Float -> HotelsList -> HotelsList
-filterByStars stars hotels =
-    List.filter (\h -> h.stars == stars || stars == 0) hotels
+filterByStars stars =
+    List.filter (\h -> h.stars == stars || stars == 0)
 
 
 filterByRating : Float -> HotelsList -> HotelsList
-filterByRating rating hotels =
-    List.filter (\h -> h.rating >= rating || rating == 0) hotels
+filterByRating rating =
+    List.filter (\h -> h.rating >= rating || rating == 0)
 
 
 filterByMinPrice : Float -> HotelsList -> HotelsList
-filterByMinPrice minPrice hotels =
-    List.filter (\h -> h.minPrice >= minPrice || minPrice == 0) hotels
+filterByMinPrice minPrice =
+    List.filter (\h -> h.minPrice >= minPrice || minPrice == 0)
 
 
-validateFloatInput : String -> Float -> Float -> Float
-validateFloatInput inputStr min max =
+toFloatClamp : String -> Float -> Float -> Float
+toFloatClamp inputStr min max =
     case String.toFloat inputStr of
         Err msg ->
             0
@@ -61,7 +57,7 @@ validateFloatInput inputStr min max =
 
 setDistanceFilter : String -> Msg
 setDistanceFilter value =
-    SetFilters (\filterCriteria -> { filterCriteria | distance = validateFloatInput value 0 100 })
+    SetFilters (\filterCriteria -> { filterCriteria | distance = toFloatClamp value 0 100 })
 
 
 setNameFilter : String -> Msg
@@ -71,14 +67,14 @@ setNameFilter value =
 
 setStarsFilter : String -> Msg
 setStarsFilter value =
-    SetFilters (\filterCriteria -> { filterCriteria | stars = validateFloatInput value 0 5 })
+    SetFilters (\filterCriteria -> { filterCriteria | stars = toFloatClamp value 0 5 })
 
 
 setRatingFilter : String -> Msg
 setRatingFilter value =
-    SetFilters (\filterCriteria -> { filterCriteria | rating = validateFloatInput value 0 10 })
+    SetFilters (\filterCriteria -> { filterCriteria | rating = toFloatClamp value 0 10 })
 
 
 setMinPriceFilter : String -> Msg
 setMinPriceFilter value =
-    SetFilters (\filterCriteria -> { filterCriteria | minPrice = validateFloatInput value 0 100000 })
+    SetFilters (\filterCriteria -> { filterCriteria | minPrice = toFloatClamp value 0 100000 })

@@ -4,22 +4,22 @@ import Models exposing (..)
 
 
 sortHotels : SortCriteria -> HotelsList -> HotelsList
-sortHotels sortCriteria results =
+sortHotels sortCriteria =
     case sortCriteria of
         Distance ->
-            List.sortBy .distance results
+            List.sortBy .distance
 
         Name ->
-            List.sortBy .name results
+            List.sortBy .name
 
         Stars ->
-            List.sortBy .stars results
+            List.sortBy .stars
 
         Rating ->
-            List.sortBy .rating results
+            List.sortBy .rating
 
         MinPrice ->
-            List.sortBy .minPrice results
+            List.sortBy .minPrice
 
 
 setSortBy : String -> Msg

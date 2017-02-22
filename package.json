@@ -1,21 +1,21 @@
 {
-  "name": "trptest-elm",
+  "name": "elm-hotels",
   "version": "1.0.0",
   "description": "",
-  "main": "Gruntfile.js",
+  "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/julianjelfs/elmhotels.git"
+    "url": "https://github.com/blah/deblah.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/julianjelfs/elmhotels/issues"
+    "url": "https://github.com/blah/deblah/issues"
   },
-  "homepage": "https://github.com/julianjelfs/elmhotels",
+  "homepage": "https://github.com/blah/deblah",
   "dependencies": {
     "body-parser": "^1.14.1",
     "express": "2.5.8",

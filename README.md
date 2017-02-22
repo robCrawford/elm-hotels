@@ -1,6 +1,5 @@
 
-
-Elm hotel results filtering test for TravelRepublic.
+Hotels UI test for TravelRepublic written in Elm.
 
 ```
 elm package install

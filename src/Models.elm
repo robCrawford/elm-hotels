@@ -7,6 +7,7 @@ type alias Model =
     { hotels : HotelsList
     , filterCriteria : FilterCriteria
     , sortCriteria : SortCriteria
+    , pageIndex : Int
     }
 
 
@@ -14,6 +15,8 @@ type Msg
     = SetHotelResults (Result Http.Error HotelsList)
     | SetFilters (FilterCriteria -> FilterCriteria)
     | SetSortBy SortCriteria
+    | PageNext
+    | PagePrevious
 
 
 type alias Hotel =
