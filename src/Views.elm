@@ -2,9 +2,18 @@ module Views exposing (..)
 
 import Models exposing (..)
 import Filters exposing (..)
+import Sort exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
+
+
+getHotelsHtml : Model -> List (Html Msg)
+getHotelsHtml model =
+    filterResults model.hotels model.filters
+        |> sortResults model.sortBy
+        |> List.take 9
+        |> List.map hotelDetailsHtml
 
 
 page : Model -> Html Msg
@@ -19,16 +28,15 @@ page model =
                 ]
             , div [ class "col-lg-9 col-md-9 col-sm-12" ]
                 [ div [ class "clearfix hotel-header" ]
-                    [ div [] [ text (toString model.filters) ]
-                    , h2 [] [ text "HOTELS" ]
+                    [ h2 [] [ text "HOTELS" ]
                     ]
                 , div [ class "clearfix" ]
                     [ div [ class "pull-right" ]
                         [ sortUI
                         ]
                     ]
-                , div [ class "row hotelProduct xsResponse clearfix", id "results" ]
-                    (List.map hotelDetails (filterResults model.hotels model.filters))
+                , div [ class "row hotel-results xsResponse clearfix", id "results" ]
+                    (getHotelsHtml model)
                 , pagingUI
                 ]
             ]
@@ -60,7 +68,7 @@ filterUI =
             , div [ class "panel-body" ]
                 [ ul [ class "filters" ]
                     [ li []
-                        [ text "Distance"
+                        [ text "Within Distance"
                         , input [ onInput updateDistanceFilter ] []
                         ]
                     , li []
@@ -88,23 +96,20 @@ filterUI =
 sortUI : Html Msg
 sortUI =
     div [ class "change-order pull-right" ]
-        [ select [ class "form-control", id "update-sort" ]
-            [ option [ value "distance-asc" ]
+        [ select
+            [ class "form-control"
+            , onInput setSortBy
+            ]
+            [ option [ value "distance" ]
                 [ text "Sort by distance" ]
-            , option [ value "name-asc" ]
+            , option [ value "name" ]
                 [ text "Sort by name" ]
-            , option [ value "stars-desc" ]
-                [ text "Sort by stars: high to low" ]
-            , option [ value "stars-asc" ]
-                [ text "Sort by stars: low to high" ]
-            , option [ value "rating-desc" ]
-                [ text "Sort by rating: high to low" ]
-            , option [ value "rating-asc" ]
-                [ text "Sort by rating: low to high" ]
-            , option [ value "price-desc" ]
-                [ text "Sort by price: high to low" ]
-            , option [ value "price-asc" ]
-                [ text "Sort by price: low to high" ]
+            , option [ value "stars" ]
+                [ text "Sort by stars" ]
+            , option [ value "rating" ]
+                [ text "Sort by rating" ]
+            , option [ value "minPrice" ]
+                [ text "Sort by minPrice" ]
             ]
         ]
 
@@ -124,10 +129,10 @@ pagingUI =
         ]
 
 
-hotelDetails : Hotel -> Html Msg
-hotelDetails hotel =
+hotelDetailsHtml : Hotel -> Html Msg
+hotelDetailsHtml hotel =
     div [ class "item col-sm-4 col-lg-4 col-md-4 col-xs-6" ]
-        [ div [ class "product" ]
+        [ div [ class "hotel-details" ]
             [ div [ class "image" ]
                 [ img
                     [ src hotel.imageUrl

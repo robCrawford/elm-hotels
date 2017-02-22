@@ -4,14 +4,16 @@ import Http exposing (..)
 
 
 type alias Model =
-    { hotels : HotelsResponse
+    { hotels : HotelsList
     , filters : FilterCriteria
+    , sortBy : SortCriteria
     }
 
 
 type Msg
-    = SetHotelResults (Result Http.Error HotelsResponse)
+    = SetHotelResults (Result Http.Error HotelsList)
     | SetFilters (FilterCriteria -> FilterCriteria)
+    | SetSortBy SortCriteria
 
 
 type alias Hotel =
@@ -24,7 +26,7 @@ type alias Hotel =
     }
 
 
-type alias HotelsResponse =
+type alias HotelsList =
     List Hotel
 
 
@@ -35,3 +37,11 @@ type alias FilterCriteria =
     , rating : Float
     , minPrice : Float
     }
+
+
+type SortCriteria
+    = Distance
+    | Name
+    | Stars
+    | Rating
+    | MinPrice

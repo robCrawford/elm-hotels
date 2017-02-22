@@ -14,12 +14,16 @@ body {
 	font-weight: bold;
 }
 
-.product {
+.hotel-results {
+    padding-top: 20px;
+}
+
+.hotel-details {
     min-height: 214px;
     background: #eee;
 }
 @media (min-width: 1200px) {
-    .product {
+    .hotel-details {
         min-height: 262px;
     }
 }

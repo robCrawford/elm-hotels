@@ -5,7 +5,7 @@ import String exposing (..)
 import Regex exposing (..)
 
 
-filterResults : HotelsResponse -> FilterCriteria -> HotelsResponse
+filterResults : HotelsList -> FilterCriteria -> HotelsList
 filterResults results filters =
     results
         |> filterByName filters.name
@@ -13,30 +13,29 @@ filterResults results filters =
         |> filterByStars filters.stars
         |> filterByRating filters.rating
         |> filterByPrice filters.minPrice
-        |> List.take 9
 
 
-filterByName : String -> HotelsResponse -> HotelsResponse
+filterByName : String -> HotelsList -> HotelsList
 filterByName name hotels =
     List.filter (\h -> Regex.contains (caseInsensitive (regex name)) h.name) hotels
 
 
-filterByDistance : Float -> HotelsResponse -> HotelsResponse
+filterByDistance : Float -> HotelsList -> HotelsList
 filterByDistance distance hotels =
     List.filter (\h -> h.distance <= distance || distance == 0) hotels
 
 
-filterByStars : Float -> HotelsResponse -> HotelsResponse
+filterByStars : Float -> HotelsList -> HotelsList
 filterByStars stars hotels =
     List.filter (\h -> h.stars == stars || stars == 0) hotels
 
 
-filterByRating : Float -> HotelsResponse -> HotelsResponse
+filterByRating : Float -> HotelsList -> HotelsList
 filterByRating rating hotels =
     List.filter (\h -> h.rating >= rating || rating == 0) hotels
 
 
-filterByPrice : Float -> HotelsResponse -> HotelsResponse
+filterByPrice : Float -> HotelsList -> HotelsList
 filterByPrice minPrice hotels =
     List.filter (\h -> h.minPrice >= minPrice || minPrice == 0) hotels
 

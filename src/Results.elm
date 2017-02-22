@@ -10,12 +10,12 @@ getHotelsData =
     Http.send SetHotelResults getHotelsRequest
 
 
-getHotelsRequest : Http.Request HotelsResponse
+getHotelsRequest : Http.Request HotelsList
 getHotelsRequest =
     Http.get "data/hotels.json" hotelsDecoder
 
 
-hotelsDecoder : Json.Decoder HotelsResponse
+hotelsDecoder : Json.Decoder HotelsList
 hotelsDecoder =
     Json.field "Establishments" (Json.list mapEstablishments)
 

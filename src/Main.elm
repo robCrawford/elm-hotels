@@ -20,6 +20,7 @@ model : Model
 model =
     { hotels = []
     , filters = FilterCriteria 10 "" 0 3 0
+    , sortBy = Distance
     }
 
 
@@ -41,6 +42,9 @@ update msg model =
 
         SetFilters updateFn ->
             ( { model | filters = updateFn model.filters }, Cmd.none )
+
+        SetSortBy sortCriteria ->
+            ( { model | sortBy = sortCriteria }, Cmd.none )
 
 
 view : Model -> Html Msg
