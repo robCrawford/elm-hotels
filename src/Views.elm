@@ -80,10 +80,6 @@ filterUI =
                         , input [ onInput updateMinPriceFilter ] []
                         ]
                     ]
-                , div []
-                    [ a [ class "btn btn-primary" ]
-                        [ text "Update" ]
-                    ]
                 ]
             ]
         ]
@@ -142,12 +138,18 @@ hotelDetails hotel =
             ]
         , div [ class "description" ]
             [ ul []
-                [ li [ class "hotel-title" ]
-                    [ (text hotel.name)
-                    ]
+                [ li [ class "hotel-title" ] [ (text hotel.name) ]
+                , li [] [ (text (getDistanceString hotel.distance)) ]
                 ]
             , div []
                 [ a [ class "btn btn-primary" ] [ text "More info" ]
                 ]
             ]
         ]
+
+
+getDistanceString : Float -> String
+getDistanceString distance =
+    (distance * 10 |> round |> toFloat)
+        / 10
+        |> toString

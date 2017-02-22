@@ -7,12 +7,20 @@ import Regex exposing (..)
 
 filterResults : HotelsResponse -> FilterCriteria -> HotelsResponse
 filterResults results filters =
-    List.take 9 (filterByName results filters.name)
+    results
+        |> filterByName filters.name
+        |> filterByDistance filters.distance
+        |> List.take 9
 
 
-filterByName : HotelsResponse -> String -> HotelsResponse
-filterByName hotels name =
+filterByName : String -> HotelsResponse -> HotelsResponse
+filterByName name hotels =
     List.filter (\h -> Regex.contains (caseInsensitive (regex name)) h.name) hotels
+
+
+filterByDistance : Float -> HotelsResponse -> HotelsResponse
+filterByDistance distance hotels =
+    List.filter (\h -> h.distance < distance) hotels
 
 
 validateFloatInput : String -> Float -> Float -> Float

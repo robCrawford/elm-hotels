@@ -22,6 +22,7 @@ hotelsDecoder =
 
 mapEstablishments : Json.Decoder Hotel
 mapEstablishments =
-    Json.map2 Hotel
+    Json.map3 Hotel
+        (Json.field "Distance" Json.float)
         (Json.field "Name" Json.string)
         (Json.field "ImageUrl" Json.string)
