@@ -3,8 +3,8 @@ module Sort exposing (..)
 import Models exposing (..)
 
 
-sortResults : SortCriteria -> HotelsList -> HotelsList
-sortResults sortCriteria results =
+sortHotels : SortCriteria -> HotelsList -> HotelsList
+sortHotels sortCriteria results =
     case sortCriteria of
         Distance ->
             List.sortBy .distance results

@@ -5,8 +5,8 @@ import Http exposing (..)
 
 type alias Model =
     { hotels : HotelsList
-    , filters : FilterCriteria
-    , sortBy : SortCriteria
+    , filterCriteria : FilterCriteria
+    , sortCriteria : SortCriteria
     }
 
 

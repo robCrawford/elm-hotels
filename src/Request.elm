@@ -1,27 +1,27 @@
-module Results exposing (..)
+module Request exposing (..)
 
 import Models exposing (..)
 import Http exposing (..)
 import Json.Decode as Json
 
 
-getHotelsData : Cmd Msg
-getHotelsData =
+fetchHotels : Cmd Msg
+fetchHotels =
     Http.send SetHotelResults getHotelsRequest
 
 
 getHotelsRequest : Http.Request HotelsList
 getHotelsRequest =
-    Http.get "data/hotels.json" hotelsDecoder
+    Http.get "data/hotels.json" decodeHotelsJson
 
 
-hotelsDecoder : Json.Decoder HotelsList
-hotelsDecoder =
-    Json.field "Establishments" (Json.list mapEstablishments)
+decodeHotelsJson : Json.Decoder HotelsList
+decodeHotelsJson =
+    Json.field "Establishments" (Json.list mapHotels)
 
 
-mapEstablishments : Json.Decoder Hotel
-mapEstablishments =
+mapHotels : Json.Decoder Hotel
+mapHotels =
     Json.map6 Hotel
         (Json.field "Distance" Json.float)
         (Json.field "Name" Json.string)

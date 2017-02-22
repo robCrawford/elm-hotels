@@ -1,7 +1,7 @@
-module Views exposing (..)
+module View exposing (..)
 
 import Models exposing (..)
-import Filters exposing (..)
+import Filter exposing (..)
 import Sort exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -10,8 +10,8 @@ import Html.Events exposing (..)
 
 getHotelsHtml : Model -> List (Html Msg)
 getHotelsHtml model =
-    filterResults model.hotels model.filters
-        |> sortResults model.sortBy
+    filterResults model.hotels model.filterCriteria
+        |> sortHotels model.sortCriteria
         |> List.take 9
         |> List.map hotelDetailsHtml
 
@@ -69,23 +69,23 @@ filterUI =
                 [ ul [ class "filters" ]
                     [ li []
                         [ text "Within Distance"
-                        , input [ onInput updateDistanceFilter ] []
+                        , input [ onInput setDistanceFilter ] []
                         ]
                     , li []
                         [ text "Name"
-                        , input [ onInput updateNameFilter ] []
+                        , input [ onInput setNameFilter ] []
                         ]
                     , li []
                         [ text "Star Rating"
-                        , input [ onInput updateStarsFilter ] []
+                        , input [ onInput setStarsFilter ] []
                         ]
                     , li []
                         [ text "Minimum User Rating"
-                        , input [ onInput updateRatingFilter ] []
+                        , input [ onInput setRatingFilter ] []
                         ]
                     , li []
                         [ text "Minimum Price"
-                        , input [ onInput updateMinPriceFilter ] []
+                        , input [ onInput setMinPriceFilter ] []
                         ]
                     ]
                 ]

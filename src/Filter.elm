@@ -1,4 +1,4 @@
-module Filters exposing (..)
+module Filter exposing (..)
 
 import Models exposing (..)
 import String exposing (..)
@@ -6,13 +6,13 @@ import Regex exposing (..)
 
 
 filterResults : HotelsList -> FilterCriteria -> HotelsList
-filterResults results filters =
+filterResults results filterCriteria =
     results
-        |> filterByName filters.name
-        |> filterByDistance filters.distance
-        |> filterByStars filters.stars
-        |> filterByRating filters.rating
-        |> filterByPrice filters.minPrice
+        |> filterByName filterCriteria.name
+        |> filterByDistance filterCriteria.distance
+        |> filterByStars filterCriteria.stars
+        |> filterByRating filterCriteria.rating
+        |> filterByPrice filterCriteria.minPrice
 
 
 filterByName : String -> HotelsList -> HotelsList
@@ -55,26 +55,26 @@ validateFloatInput inputStr min max =
                 value
 
 
-updateDistanceFilter : String -> Msg
-updateDistanceFilter value =
-    SetFilters (\filters -> { filters | distance = validateFloatInput value 0 100 })
+setDistanceFilter : String -> Msg
+setDistanceFilter value =
+    SetFilters (\filterCriteria -> { filterCriteria | distance = validateFloatInput value 0 100 })
 
 
-updateNameFilter : String -> Msg
-updateNameFilter value =
-    SetFilters (\filters -> { filters | name = value })
+setNameFilter : String -> Msg
+setNameFilter value =
+    SetFilters (\filterCriteria -> { filterCriteria | name = value })
 
 
-updateStarsFilter : String -> Msg
-updateStarsFilter value =
-    SetFilters (\filters -> { filters | stars = validateFloatInput value 0 5 })
+setStarsFilter : String -> Msg
+setStarsFilter value =
+    SetFilters (\filterCriteria -> { filterCriteria | stars = validateFloatInput value 0 5 })
 
 
-updateRatingFilter : String -> Msg
-updateRatingFilter value =
-    SetFilters (\filters -> { filters | rating = validateFloatInput value 0 10 })
+setRatingFilter : String -> Msg
+setRatingFilter value =
+    SetFilters (\filterCriteria -> { filterCriteria | rating = validateFloatInput value 0 10 })
 
 
-updateMinPriceFilter : String -> Msg
-updateMinPriceFilter value =
-    SetFilters (\filters -> { filters | minPrice = validateFloatInput value 0 100000 })
+setMinPriceFilter : String -> Msg
+setMinPriceFilter value =
+    SetFilters (\filterCriteria -> { filterCriteria | minPrice = validateFloatInput value 0 100000 })
