@@ -25,14 +25,11 @@ body {
 }
 
 .hotel-details {
-    min-height: 214px;
     background: #eee;
 }
 
-@media (min-width: 1200px) {
-    .hotel-details {
-        min-height: 262px;
-    }
+.hotel-details .image {
+    max-width: 100%;
 }
 
 .filters input {

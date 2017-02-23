@@ -7,14 +7,14 @@ function onError(err) {
     this.emit('end');
 }
 
-gulp.task('elm', function () {
+gulp.task('elm', function() {
     return gulp.src('src/Main.elm')
         .pipe(elm())
         .on('error', onError)
         .pipe(gulp.dest('public/js/'));
 });
 
-gulp.task('default', function () {
+gulp.task('default', ['elm'],  function() {
     var process = spawn('node', ['app.js'], { stdio: 'inherit' });
     console.log('PID: ', process.pid);
     gulp.watch('src/*.elm', ['elm']);

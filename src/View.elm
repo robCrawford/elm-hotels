@@ -23,16 +23,6 @@ getHotelsResults model =
         |> List.drop (9 * model.pageIndex)
 
 
-pagePrevious : Msg
-pagePrevious =
-    PagePrevious
-
-
-pageNext : Msg
-pageNext =
-    PageNext
-
-
 page : Model -> Html Msg
 page model =
     div [ class "container main-container" ]
@@ -150,7 +140,7 @@ getPagingNextHtml model =
             List.length (getHotelsResults model)
     in
         if resultCount > 9 then
-            a [ onClick pageNext ] [ text "»" ]
+            a [ onClick PageNext ] [ text "»" ]
         else
             a [ class "inactive" ] [ text "»" ]
 
@@ -158,7 +148,7 @@ getPagingNextHtml model =
 getPagingPreviousHtml : Model -> Html Msg
 getPagingPreviousHtml model =
     if model.pageIndex > 0 then
-        a [ onClick pagePrevious ] [ text "«" ]
+        a [ onClick PagePrevious ] [ text "«" ]
     else
         a [ class "inactive" ] [ text "«" ]
 

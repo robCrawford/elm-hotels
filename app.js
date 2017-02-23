@@ -15,7 +15,6 @@ app.configure(function () {
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(bodyParser.json());
-  //app.use(express.bodyParser());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(express.methodOverride());
   app.use(app.router);

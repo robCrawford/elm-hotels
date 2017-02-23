@@ -6,7 +6,7 @@ import Regex exposing (..)
 
 getFilters : FilterCriteria -> HotelsList -> HotelsList
 getFilters filterCriteria =
-    -- When only `FilterCriteria` is supplied, this returns a function `(HotelsList -> HotelsList)`
+    -- This returns a function `HotelsList -> HotelsList`
     -- See http://stackoverflow.com/questions/27441648/what-does-the-operator-mean-in-elm
     filterByName filterCriteria.name
         >> filterByDistance filterCriteria.distance

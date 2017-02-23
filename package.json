@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/blah/deblah.git"
+    "url": "https://github.com/robCrawford/elm-hotels.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/blah/deblah/issues"
+    "url": "https://github.com/robCrawford/elm-hotels/issues"
   },
-  "homepage": "https://github.com/blah/deblah",
+  "homepage": "https://github.com/robCrawford/elm-hotels",
   "dependencies": {
     "body-parser": "^1.14.1",
     "express": "2.5.8",

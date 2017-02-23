@@ -11,7 +11,9 @@ type alias Model =
     }
 
 
-type Msg
+type
+    Msg
+    -- All `Msg` types are handled by the `update` function
     = SetHotelResults (Result Http.Error HotelsList)
     | SetFilters (FilterCriteria -> FilterCriteria)
     | SetSortBy SortCriteria
